@@ -27,20 +27,13 @@
 
 ## Training
 - 100 epochs
-- lr 3e-4 for CNN, 6e-5 for Transformer
-- bce + dice loss
+- lr 3e-4 for training linear layer
+- MAE loss
 
 ## Validation
 - 5 fold models
 - only choose best model from validation
 
 ## Inference
-- TTA * 8 (Flip、Rotate)
-- choosing lower threshold for Hubmap data
-- 2 model (CNN) for lung type prediction, 4 model (Transformer) for the others. (total 6 model)
-
-## Top place method which I missed
-- Pseudo label on GTEX portal data.
-- Using full dataset to create one model (no validation).
-- SWA or model fusion in the same training pipeline.
-- Stain Normalization while inference (not only training).
+- 5 fold model ensemble
+- If the model predicts a negative value, we manually set it to zero as a post-processing step.
