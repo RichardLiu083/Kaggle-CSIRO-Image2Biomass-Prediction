@@ -1,5 +1,5 @@
 # Kaggle-CSIRO-Image2Biomass-Prediction
-**2026/01/29 - Silver Medal**  
+**2026/01/31 - Silver Medal**  
 [Competition Link](https://www.kaggle.com/competitions/csiro-biomass/overview)
 ![image](https://github.com/RichardLiu083/Kaggle-CSIRO-Image2Biomass-Prediction/blob/master/result.png)
 
