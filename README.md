@@ -1,37 +1,29 @@
-# Kaggle-HuBMAP-HPA-Hacking-the-Human-Body
-**2022/09/23 - Silver Medal - Top 4%**  
-[Competition Link](https://www.kaggle.com/competitions/hubmap-organ-segmentation)
+# Kaggle-CSIRO-Image2Biomass-Prediction
+**2026/01/29 - Silver Medal**  
+[Competition Link](https://www.kaggle.com/competitions/csiro-biomass/overview)
 ![image](https://github.com/RichardLiu083/Kaggle-HuBMAP-HPA-Hacking-the-Human-Body/blob/main/img/Rank.png)
 
-## Solution
-![image](https://github.com/RichardLiu083/Kaggle-HuBMAP-HPA-Hacking-the-Human-Body/blob/main/img/Inference%20Pipeline.png)
-
 ## Insight
-- Split the main task into two subtask (predict lung type and the others), which makes the model more stable while training and validation. 
-  Probably because lung type have weak signal and also noisy label.
-- CNN model is better than transformer model on lung type prediction.
-- Transformer model is better than CNN model while predicting the other types.
-- Stain Normalization can reduce the difference between HPA and Hubmap data.
-- Scale adjustment is crucial since Hubmap data have different pixel size compare to HPA data.
-- Doing Mosaic、Cutmix augmentation on lung type data will lead to performence drop.
-- Multi-classes model is worse than single class model.
-
+- Using stratified k-fold to split the dataset by Sampling_Date、State、Species, to make sure every samples under each environment and time interval are exist in each fold.
+- Since the dataset is limited and consists of natural scene imagery, using a pretrained model yields substantially better results than training from scratch.
+- Given the linear relationship between the five target labels, it is theoretically possible to predict only three and derive the others. However, empirical results show that letting the model learn and output all five values directly results in better overall accuracy.
+- It is vital to keep images at their original scale. Manually scaling or distorting the images during training and prediction will only result in poorer model performance.
+- Freezing model backbone while training, only train linear layer to avoid overfitting on small dataset.
+- To ensure stable convergence, the EMA method was applied to the model weights throughout the training process.
+  
 ## Model
-- EfficientNet_b7 * 2 (Unet decoder)
-- Coat_medium (Daformer decoder)
-- Segformer_b5 * 2 (different image size)
-- Beit_base
+- DinoV3
+- We extract the intermediate layer outputs of DinoV3, flatten the tensors, and then feed them into a linear layer.  
 
 ## Augmentation
-- Stain Normalization (helps a lot)
-- Mosaic
-- Cutmix
-- H、V Flip
+- RandomBrightnessContrast
+- CLAHE
 - HueSaturationValue
-- ShiftScaleRotate
-- CoarseDropout
 - Blur
-- GaussNoise
+- HorizontalFlip
+- VerticalFlip
+- ShiftScaleRotate
+- Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
 ## Training
 - 100 epochs
@@ -39,7 +31,7 @@
 - bce + dice loss
 
 ## Validation
-- 5 fold 
+- 5 fold models
 - only choose best model from validation
 
 ## Inference
