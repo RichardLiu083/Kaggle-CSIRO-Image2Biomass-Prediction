@@ -1,7 +1,7 @@
 # Kaggle-CSIRO-Image2Biomass-Prediction
 **2026/01/29 - Silver Medal**  
 [Competition Link](https://www.kaggle.com/competitions/csiro-biomass/overview)
-![image](https://github.com/RichardLiu083/Kaggle-HuBMAP-HPA-Hacking-the-Human-Body/blob/main/img/Rank.png)
+![image](https://github.com/RichardLiu083/Kaggle-CSIRO-Image2Biomass-Prediction/blob/master/result.png)
 
 ## Insight
 - Using stratified k-fold to split the dataset by Sampling_Date、State、Species, to make sure every samples under each environment and time interval are exist in each fold.
